@@ -25,7 +25,7 @@ class BatchWriteTestConfig(
     @Value("\${generated.output.directory}") private val outputDirectory: String
 ) {
     private var count = 0
-    private val maxRecordsToGenerate = 1000000
+    private val maxRecordsToGenerate = 100000
 
     @Bean
     fun batchWriteReader(): ItemReader<Transaction> {
@@ -74,7 +74,7 @@ class BatchWriteTestConfig(
             "generateTransactionsStep",
             jobRepository
         ).chunk<Transaction, Transaction>(
-            100000,
+            (maxRecordsToGenerate / 10),
             transactionManager!!
         )
             .reader(batchWriteReader!!)

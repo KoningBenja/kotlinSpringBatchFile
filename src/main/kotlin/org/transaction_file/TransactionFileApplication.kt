@@ -11,7 +11,7 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class TransactionFileApplication(
     private val jobLauncher: JobLauncher,
-    @Qualifier("onlyValidTransactionsJob") private val jobToRun: Job
+    @Qualifier("generateTransactionsJob") private val jobToRun: Job
 ) : CommandLineRunner {
     override fun run(vararg args: String) {
         val params = JobParametersBuilder()
