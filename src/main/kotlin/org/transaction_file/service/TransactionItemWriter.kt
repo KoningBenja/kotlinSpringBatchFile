@@ -8,7 +8,8 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator
 import org.springframework.core.io.FileSystemResource
 import java.io.Writer
 
-class TransactionItemWriter(private val outputPath: String) : FlatFileItemWriter<Transaction>() {
+class TransactionItemWriter(private val outputPath: String) :
+FlatFileItemWriter<Transaction>() {
     init {
         this.setName("TransactionItemWriter")
         this.setResource(FileSystemResource(outputPath))
@@ -17,12 +18,22 @@ class TransactionItemWriter(private val outputPath: String) : FlatFileItemWriter
     }
 }
 
-class TransactionalLineAggregator : DelimitedLineAggregator<Transaction>() {
+class TransactionalLineAggregator :
+DelimitedLineAggregator<Transaction>() {
     init {
         this.setDelimiter(",")
-        this.setFieldExtractor(BeanWrapperFieldExtractor<Transaction>().apply {
-            this.setNames(arrayOf("reference", "accountNumber", "description", "startBalance", "mutation", "endBalance"))
-        })
+        this.setFieldExtractor(
+            BeanWrapperFieldExtractor<Transaction>().apply {
+                this.setNames(arrayOf(
+                    "reference",
+                    "accountNumber",
+                    "description",
+                    "startBalance",
+                    "mutation",
+                    "endBalance"
+                ))
+            }
+        )
     }
 }
 

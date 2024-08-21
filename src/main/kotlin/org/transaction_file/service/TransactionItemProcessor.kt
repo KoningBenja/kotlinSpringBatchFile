@@ -3,7 +3,9 @@ package org.transaction_file.service
 import org.transaction_file.domain.model.Transaction
 import org.springframework.batch.item.ItemProcessor
 
-class TransactionItemProcessor: ItemProcessor<Transaction, Transaction?> {
+class TransactionItemProcessor :
+    ItemProcessor<Transaction, Transaction?>
+{
     private var seenReferences = mutableSetOf<String>()
 
     override fun process(transaction: Transaction): Transaction? {

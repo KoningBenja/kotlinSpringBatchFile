@@ -16,6 +16,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.transaction_file.domain.model.Transaction
 import org.transaction_file.service.BatchWriteProcessor
 import org.transaction_file.service.TransactionItemWriter
+import org.transaction_file.service.TransactionItemWriterAgain
 import org.transaction_file.utils.EasyRandomFactory
 
 @Configuration
@@ -40,19 +41,6 @@ class BatchWriteTestConfig(
         }
     }
 
-//    @Bean
-//    fun batchWriteReader(): ItemReader<Transaction> {
-//        return ItemReader {
-//            if (count < maxRecordsToGenerate) {
-//                val easyRandom = EasyRandomFactory.newTransactionInstance()
-//                count++
-//                easyRandom.nextObject(Transaction::class.java)
-//            } else {
-//                null
-//            }
-//        }
-//    }
-
     @Bean
     fun batchWriteProcessor(): ItemProcessor<Transaction, Transaction> {
         return BatchWriteProcessor()
@@ -60,7 +48,9 @@ class BatchWriteTestConfig(
 
     @Bean
     fun batchWriteWriter(): ItemWriter<Transaction> {
-        return TransactionItemWriter(outputDirectory)
+        val anInstance = TransactionItemWriterAgain()
+        anInstance.setOutputPath(outputDirectory)
+        return anInstance
     }
 
     @Bean
